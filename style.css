@@ -1,8 +1,16 @@
 .grid {
     width: 400px;
     height: 600px;
-    background-image: url('https://www.w3schools.com/w3images/forestbridge.jpg');
+    /* background-image: url('https://www.w3schools.com/w3images/forestbridge.jpg'); */
     position: relative;
     font-size: 100px;
     text-align: center;
+}
+
+.doodler {
+    width: 87px;
+    height: 85px;
+    background-color: url('manga-image.png');
+    position: absolute;
+
 }
