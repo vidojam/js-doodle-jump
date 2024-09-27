@@ -1,7 +1,7 @@
 .grid {
     width: 400px;
     height: 600px;
-    /* background-image: url('https://www.w3schools.com/w3images/forestbridge.jpg'); */
+    background-image: url('https://www.w3schools.com/w3images/forestbridge.jpg');
     position: relative;
     font-size: 100px;
     text-align: center;
@@ -10,7 +10,8 @@
 .doodler {
     width: 87px;
     height: 85px;
-    background-image: url('manga-image.png');
+    background-image: url('doodle.png');
+    background-size: cover;
     position: absolute;
 
 }
@@ -18,6 +19,7 @@
 .platform {
     width: 85px;
     height: 15px;
-    background-image: url('youtube.png');
+    background-image: url('platform-image.jpeg');
+    background-size: cover;
     position: absolute;
 }

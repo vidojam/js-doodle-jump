@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const grid = document.querySelector('.grid');
     const doodler = document.createElement('div');
     let isGameOver = false;
+    let platformCount = 5;
+    let platforms = [];
     let doodlerLeftSpace = 50;
     let doodlerBottomSpace = 150;
 
@@ -20,16 +22,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createPlatforms() {
-        for (let i = 0; i < 5; i++) {
-            let platGap = 600 / 5;
+        for (let i = 0; i < platformCount; i++) {
+            let platGap = 600 / platformCount;
             let newPlatBottom = 100 + i * platGap;
             let newPlatform = new Platform(newPlatBottom);
+            platforms.push(newPlatform);
+            console.log(platforms);
         }
     }
+    createPlatforms();
 
     function createDoodler() {
-        grid.appendChild('doodler');
-        doodler.classList.add(doodler);
+        grid.appendChild(doodler);
+        doodler.classList.add('doodler');
         doodler.style.left = doodlerLeftSpace + 'px';
         doodler.style.bottom = '100px';
     }
