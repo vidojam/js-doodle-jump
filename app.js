@@ -35,8 +35,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function createDoodler() {
         grid.appendChild(doodler);
         doodler.classList.add('doodler');
+        doodlerLeftSpace = platforms[0].left;
         doodler.style.left = doodlerLeftSpace + 'px';
-        doodler.style.bottom = '100px';
+        doodler.style.bottom = doodlerBottomSpace + 'px';
     }
     createDoodler();
 });
