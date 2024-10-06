@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     const grid = document.querySelector('.grid');
     const doodler = document.createElement('div');
+    const scoreDisplay = document.createElement('div');
     let isGameOver = false;
     let speed = 3;
-    const platformCount = 5; // Use const if it's not going to change
+    const platformCount = 5;
     let platforms = [];
     let score = 0;
     let doodlerLeftSpace = 50;
@@ -14,10 +15,17 @@ document.addEventListener('DOMContentLoaded', function() {
     let upTimerId;
     let downTimerId;
     let isGoingLeft = false;
-    let isGolingRight = false;
+    let isGoingRight = false;
     let leftTimerId;
     let rightTimerId;
 
+    // Style the score display
+    scoreDisplay.style.position = 'absolute';
+    scoreDisplay.style.color = 'white';
+    scoreDisplay.style.fontSize = '24px';
+    scoreDisplay.style.top = '10px';
+    scoreDisplay.style.left = '10px';
+    grid.appendChild(scoreDisplay);
 
     class Platform {
         constructor(newPlatBottom) {
@@ -42,22 +50,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-function movePlatforms() {
-    platforms.forEach(platform => {
-        platform.bottom -= 4; // Move each platform down by 4 pixels
-        platform.visual.style.bottom = platform.bottom + 'px';
+    function movePlatforms() {
+        platforms.forEach(platform => {
+            platform.bottom -= 4;
+            platform.visual.style.bottom = platform.bottom + 'px';
 
-        // Check if the platform goes below the threshold
-        if (platform.bottom < 10) {
-            platform.visual.remove(); // Remove the visual element
-            platforms.shift(); // Remove the first platform from the array
-            score++;
-            let newPlatform = new Platform(600); // Create a new platform at the top
-            platforms.push(newPlatform);
-        }
-    });
-}
-
+            if (platform.bottom < 10) {
+                platform.visual.remove();
+                platforms.shift();
+                score++;
+                scoreDisplay.textContent = 'Score: ' + score; // Update the score display
+                let newPlatform = new Platform(600);
+                platforms.push(newPlatform);
+            }
+        });
+    }
 
     function createDoodler() {
         grid.appendChild(doodler);
@@ -84,15 +91,16 @@ function movePlatforms() {
                     (doodlerLeftSpace <= (platform.left + 85)) &&
                     !isJumping
                 ) {
-                    console.log('landed');
+                    startPoint = doodlerBottomSpace;
                     jump();
+                    isJumping = true;
                 }
             });
         }, 20);
     }
     fall();
 
-    function jump() {  
+    function jump() {
         clearInterval(downTimerId);
         isJumping = true;
         upTimerId = setInterval(function() {
@@ -121,7 +129,7 @@ function movePlatforms() {
         }, 20);
     }
 
-    function moveRight() {  
+    function moveRight() {
         if (isGoingLeft) {
             clearInterval(leftTimerId);
             isGoingLeft = false;
@@ -135,6 +143,13 @@ function movePlatforms() {
                 moveLeft();
             }
         }, 20);
+    }
+
+    function moveStraight() {
+        isGoingLeft = false;
+        isGoingRight = false;
+        clearInterval(leftTimerId);
+        clearInterval(rightTimerId);
     }
 
     function control(e) {
@@ -153,25 +168,24 @@ function movePlatforms() {
         while (grid.firstChild) {
             grid.removeChild(grid.firstChild);
         }
-        grid.innerHTML = score;
+        grid.innerHTML = 'Game Over! Final Score: ' + score; // Display final score
+        scoreDisplay.style.display = 'none'; // Hide the score display
         clearInterval(downTimerId);
         clearInterval(upTimerId);
         clearInterval(leftTimerId);
         clearInterval(rightTimerId);
-            
-     
     }
 
     function start() {
         if (!isGameOver) {
-            createDoodler();    
+            createDoodler();
             setInterval(movePlatforms, 30);
             jump();
             document.addEventListener('keyup', control);
         }
     }
 
-    createPlatforms(); // Move this outside of start to avoid duplicates
+    createPlatforms();
     start();
 });
 
